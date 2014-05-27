@@ -4,7 +4,7 @@ package Matchable;
 
 no autovivification;
 use Carp qw(carp croak);
-use Clonable::Util qw(arrayref);
+use Clonable::Util qw(arrayref coderef);
 use Matchable::Util qw(equiv_matchable);
 use Safe::Isa;
 use Scalar::Util 'blessed';
@@ -30,7 +30,7 @@ sub against {
 sub match {
   my ($self, $cb) = @_;
   my $ph = {};
-  my $ret = equiv_matchable($_,$self,$ph) || return undef;
+  my $ret = equiv_matchable($_,$self,$ph) or return undef;
   local $_ = $ret;
   escape($cb->($ph));
 }
