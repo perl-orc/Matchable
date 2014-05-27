@@ -158,9 +158,6 @@ eq_or_diff(\%ph,{foo=>$t1}, "equiv_a: placeholders are set correctly");
 throws_ok {
   equiv_a($t1,$phfoo,\%ph);
 } qr/Placeholder 'foo' already exists, refusing to overwrite/;
-throws_ok {
-  equiv_a(sub {},{});
-} qr/We cannot handle any non-blessed ref types other than ARRAY or HASH/;
 # equiv
 ($ret, $ph) = equiv(
   T1->new(val => [
