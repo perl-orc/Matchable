@@ -37,10 +37,10 @@ use Scalar::Util 'blessed';
 }
 
 # ph
-my $phfoo = ph(foo);
+my $phfoo = ph('foo');
 eq_or_diff(blessed($phfoo),'Matchable::Placeholder',"ph: foo is a placeholder");
 eq_or_diff($phfoo->name,'foo',"ph: foo's name is foo");
-my $phbar = ph(bar);
+my $phbar = ph('bar');
 eq_or_diff(blessed($phbar),'Matchable::Placeholder',"ph: bar is a placeholder");
 eq_or_diff($phbar->name,'bar',"ph: bar's name is bar");
 
@@ -60,8 +60,8 @@ eq_or_diff( isa_ph_or(T1->new, @classes), 1,     "isa_ph_or: the whole list is s
 
 my $t1 = T1->new(val=>'foo');
 my %ph;
-my $phbaz = ph(baz);
-my $phquux = ph(quux);
+my $phbaz = ph('baz');
+my $phquux = ph('quux');
 my $ret = $t1->_equiv_placeholder($phfoo,$t1,\%ph);
 eq_or_diff($ret,$t1,"_equiv_placeholder: complex classes are returned");
 $ret->{'val'} = "bar";
@@ -129,7 +129,7 @@ eq_or_diff($t1->_equiv_one({qw(a b c), $t1},{qw(a b c), $t1}),
 eq_or_diff($t1->_equiv_one({},$t1),undef, "_equiv_one: disjoint types are undef (left)");
 eq_or_diff($t1->_equiv_one($t1,{}),undef, "_equiv_one: disjoint types are undef (right)");
 %ph = ();
-$ret = $t1->_equiv_one(T1->new(val => [ph(val1), ph(val2)]), T1->new(val => [6,12]), \%ph);
+$ret = $t1->_equiv_one(T1->new(val => [ph('val1'), ph('val2')]), T1->new(val => [6,12]), \%ph);
 eq_or_diff($ret, T1->new(val => [6,12]), "_equiv_one: placeholders at sublevels are processed properly");
 eq_or_diff(\%ph, {val1 => 6, val2 => 12}, "_equiv_one: placeholders at sublevels are set properly");
 %ph = ();
@@ -137,12 +137,12 @@ $ret = $t1->_equiv_one(
   T1->new(val => [
     {
       a => \%t2,
-      b => ph(foobar),
+      b => ph('foobar'),
     }
   ]),
   T1->new(val => [
     {
-      a => ph(bazfoo),
+      a => ph('bazfoo'),
       b => \%t1,
     }
   ]),
@@ -166,12 +166,12 @@ my $ph;
   T1->new(val => [
     {
       a => \%t2,
-      b => ph(foobar),
+      b => ph('foobar'),
     }
   ]),
   T1->new(val => [
     {
-      a => ph(bazfoo),
+      a => ph('bazfoo'),
       b => \%t1,
     }
   ]),
