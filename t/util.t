@@ -9,27 +9,12 @@ use Matchable::Util qw(
 );
 
 use Scalar::Util 'blessed';
-{
-  package T1;
-  # ABSTRACT: T1 is a class that conforms to what we expect of a matchable
-  use Safe::Isa;
-  use Scalar::Util 'blessed';
-  use Moo;
-  with 'Matchable';
-  has val => (
-    is => 'ro',
-  );
-  has '+_clonable_attrs' => (
-    default => sub {['val']},
-  );
-  has '+_matchable_attrs' => (
-    default => sub {['val']},
-  );
-}
+use lib 't/lib';
+use T1;
+
 
 eq_or_diff(matchable(T1->new),1,"matchable: T1");
 eq_or_diff(matchable({}),undef,"matchable: Hashref");
-
 my $phfoo = ph('foo');
 eq_or_diff(blessed($phfoo),'Matchable::Placeholder',"ph: foo is a placeholder");
 eq_or_diff($phfoo->name,'foo',"ph: foo's name is foo");

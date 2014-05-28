@@ -3,24 +3,10 @@ use Test::Most;
 use Matchable qw( ph isa_ph isa_ph_or );
 use Matchable::Placeholder;
 use Scalar::Util 'blessed';
+use lib 't/lib';
+use T1;
 {
-  package T1;
-  # ABSTRACT: T1 is a class that conforms to what we expect of a matchable
-  use Safe::Isa;
-  use Scalar::Util 'blessed';
-  use Moo;
-  with 'Matchable';
-  has val => (
-    is => 'ro',
-  );
-  has '+_clonable_attrs' => (
-    default => sub {['val']},
-  );
-  has '+_matchable_attrs' => (
-    default => sub {['val']},
-  );
-}
-{
+
   package T2;
   # ABSTRACT: T2 is another conformant class
   use Safe::Isa;
