@@ -13,11 +13,12 @@ my $left      = T1->new( val => [ { a => \%t2,         b => ph('foobar'), } ] );
 my $right     = T1->new( val => [ { a => ph('bazfoo'), b => \%t1, } ] );
 my $composite = T1->new( val => [ { a => \%t2,         b => \%t1 } ] );
 
-my ( $ret, $ph ) = equiv( $left, $right );
+my %ph;
+my $ret = equiv( $left, $right, \%ph );
 
 eq_or_diff( $ret, $composite, 'placeholders at sublevels on both sides are processed properly' );
 
-eq_or_diff( $ph, { foobar => \%t1, bazfoo => \%t2 }, 'placeholders at sublevels on both sides are set correctly' );
+eq_or_diff( \%ph, { foobar => \%t1, bazfoo => \%t2 }, 'placeholders at sublevels on both sides are set correctly' );
 
 done_testing;
 
