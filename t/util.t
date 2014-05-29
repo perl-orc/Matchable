@@ -14,15 +14,10 @@ use T1;
 
 my $phfoo = ph('foo');
 my $phbar = ph('bar');
-
-eq_or_diff(equiv_simple('foo','foo'),'foo', "equiv_simple: matching strings");
-eq_or_diff(equiv_simple('foo','bar'),undef, "equiv_simple: unmatching strings");
-eq_or_diff(equiv_simple(123,123),123, "equiv_simple: matching numbers");
-eq_or_diff(equiv_simple(123,456),undef, "equiv_simple: unmatching numbers");
-
 my $t1 = T1->new(val=>'foo');
 my %ph;
 my $phbaz = ph('baz');
+my $ph    = {};
 my $ret = equiv_placeholder($phfoo,$t1,\%ph);
 eq_or_diff($ret->val,'foo',"equiv_placeholder: complex classes are returned");
 $ret->{'val'} = "bar";
