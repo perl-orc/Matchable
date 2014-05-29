@@ -18,30 +18,9 @@ my $t1 = T1->new(val=>'foo');
 my %ph;
 my $phbaz = ph('baz');
 my $ph    = {};
-my $ret = equiv_placeholder($phfoo,$t1,\%ph);
-eq_or_diff($ret->val,'foo',"equiv_placeholder: complex classes are returned");
-$ret->{'val'} = "bar";
-eq_or_diff($t1->val,'foo',"equiv_placeholder: clones cleanly");
-$ret = equiv_placeholder(12,$phbar,\%ph),
-eq_or_diff($ret, 12,"equiv_placeholder: numeric data are returned");
-eq_or_diff(\%ph,{foo=>$t1,bar=>12},"equiv_placeholder: placeholders have been set correctly");
-%ph = ();
-eq_or_diff(equiv_placeholder($phfoo,[qw(foo bar)],\%ph),[qw(foo bar)],"equiv_placeholder: ARRAY refs are looped (left)");
-eq_or_diff(equiv_placeholder([qw(bar foo)],$phbar,\%ph),[qw(bar foo)],"equiv_placeholder: ARRAY refs are looped (right)");
-eq_or_diff(\%ph,{foo=>[qw(foo bar)],bar =>[qw(bar foo)]},"equiv_placeholder: placeholders have been set correctly");
-%ph = ();
-eq_or_diff(equiv_placeholder($phfoo,{qw(foo bar baz quux)},\%ph),{qw(foo bar baz quux)},"equiv_placeholder: HASH refs are looped (left)");
-eq_or_diff(equiv_placeholder({qw(bar foo quux baz)},$phbar,\%ph),{qw(bar foo quux baz)},"equiv_placeholder: HASH refs are looped (right)");
-eq_or_diff(\%ph,{foo=>{qw(foo bar baz quux)},bar =>{qw(bar foo quux baz)}},"equiv_placeholder: placeholders have been set correctly");
-throws_ok {
-  equiv_placeholder($t1,$phfoo,\%ph);
-} qr/Placeholder 'foo' already exists, refusing to overwrite/;
-throws_ok {
-  equiv_placeholder($phfoo,$phbar);
-} qr/equiv_placeholder: You may only provide a single placeholder/;
-throws_ok {
-  equiv_placeholder(1,2);
-} qr/equiv_placeholder: You must provide a single placeholder/;
+my $ret;
+
+eq_or_diff( equiv_matchable( $t1, $t1 )->val, 'foo', "equiv_matchable: matchables are cloned correctly" );
 
 eq_or_diff(equiv_matchable($t1,$t1)->val,'foo', "equiv_matchable: matchables are cloned correctly");
 # equiv_arrayref
