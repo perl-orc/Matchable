@@ -23,23 +23,37 @@ subtest 'matches _' => sub {
   eq_or_diff( $called, 1, 't1 matches against itself in _, triggering callback' );
 };
 
-my $t1 = T1->new( val => 'foo' );
-
-# match, match_if
-{
+subtest 'matches _ if cond(0)' => sub {
+  my $t1 = T1->new( val => 'foo' );
   local $_ = $t1;
-  my $called;
   no warnings 'redefine';
-  local *Matchable::escape = sub {};
-  $t1->match_if(sub{
-    $called = 1;
-  },sub{0});
-  eq_or_diff($called,undef);
-  $t1->match_if(sub{
-    $called = 1;
-  },sub{1});
-  eq_or_diff($called,1);
-}
+  local *Matchable::escape = sub { };
+  my $called;
+  $t1->match_if(
+    sub {
+      $called = 1;
+    },
+    sub { 0 }
+  );
+  eq_or_diff( $called, undef, 'Condition doest match == code doesnt run' );
+};
+
+subtest 'matches _ if cond(1)' => sub {
+  my $t1 = T1->new( val => 'foo' );
+  local $_ = $t1;
+  no warnings 'redefine';
+  local *Matchable::escape = sub { };
+  my $called;
+  $t1->match_if(
+    sub {
+      $called = 1;
+    },
+    sub { 1 }
+  );
+  eq_or_diff( $called, 1, 'Condition does match == code runs' );
+};
+
+my $t1 = T1->new( val => 'foo' );
 
 my $leaky;
 eq_or_diff(T1->new(val=>'foo')->against(sub{
