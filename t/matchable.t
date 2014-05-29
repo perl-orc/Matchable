@@ -13,6 +13,16 @@ subtest 'against' => sub {
 
 };
 
+subtest 'matches _' => sub {
+  my $t1 = T1->new( val => 'foo' );
+  local $_ = $t1;
+  no warnings 'redefine';
+  local *Matchable::escape = sub { };
+  my $called;
+  $t1->match( sub { $called = 1 } );
+  eq_or_diff( $called, 1, 't1 matches against itself in _, triggering callback' );
+};
+
 my $t1 = T1->new( val => 'foo' );
 
 # match, match_if
@@ -21,10 +31,6 @@ my $t1 = T1->new( val => 'foo' );
   my $called;
   no warnings 'redefine';
   local *Matchable::escape = sub {};
-  $t1->match(sub{
-    $called = 1;
-  });
-  eq_or_diff($called,1);
   $t1->match_if(sub{
     $called = 1;
   },sub{0});
