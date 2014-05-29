@@ -12,9 +12,6 @@ use Scalar::Util 'blessed';
 use lib 't/lib';
 use T1;
 
-
-eq_or_diff(matchable(T1->new),1,"matchable: T1");
-eq_or_diff(matchable({}),undef,"matchable: Hashref");
 my $phfoo = ph('foo');
 eq_or_diff(blessed($phfoo),'Matchable::Placeholder',"ph: foo is a placeholder");
 eq_or_diff($phfoo->name,'foo',"ph: foo's name is foo");
