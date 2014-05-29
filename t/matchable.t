@@ -4,13 +4,16 @@ use Matchable qw( ph isa_ph isa_ph_or );
 use lib 't/lib';
 use T1;
 
-my $t1 = T1->new(val=>'foo');
+subtest 'against' => sub {
 
-my $inner;
-$t1->against(sub {
-  $inner = $_;
-});
-eq_or_diff($inner,$t1);
+  my $t1 = T1->new( val => 'foo' );
+  my $inner;
+  $t1->against( sub { $inner = $_; } );
+  eq_or_diff( $inner, $t1, 'against aliases invocant to _ in callback' );
+
+};
+
+my $t1 = T1->new( val => 'foo' );
 
 # match, match_if
 {
