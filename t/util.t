@@ -20,9 +20,6 @@ my $phbaz = ph('baz');
 my $ph    = {};
 my $ret;
 
-eq_or_diff( equiv_matchable( $t1, $t1 )->val, 'foo', "equiv_matchable: matchables are cloned correctly" );
-
-eq_or_diff(equiv_matchable($t1,$t1)->val,'foo', "equiv_matchable: matchables are cloned correctly");
 # equiv_arrayref
 # equiv_hashref
 # equiv_ref
