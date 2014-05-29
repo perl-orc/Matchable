@@ -15,12 +15,6 @@ use T1;
 my $phfoo = ph('foo');
 my $phbar = ph('bar');
 
-my $ph = {};
-add_placeholder('foo','bar',$ph);
-eq_or_diff($ph,{foo => 'bar'}, 'add_placeholder: foo added correctly');
-add_placeholder('bar','baz',$ph);
-eq_or_diff($ph,{foo => 'bar', bar => 'baz'}, 'add_placeholder: bar added correctly');
-
 eq_or_diff(equiv_simple('foo','foo'),'foo', "equiv_simple: matching strings");
 eq_or_diff(equiv_simple('foo','bar'),undef, "equiv_simple: unmatching strings");
 eq_or_diff(equiv_simple(123,123),123, "equiv_simple: matching numbers");
