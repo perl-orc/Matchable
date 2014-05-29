@@ -23,6 +23,17 @@ subtest 'matches _' => sub {
   eq_or_diff( $called, 1, 't1 matches against itself in _, triggering callback' );
 };
 
+subtest 'matches _ different attr' => sub {
+  my $t1 = T1->new( val => 'foo' );
+  my $t2 = T1->new( val => 'bar' );
+  local $_ = $t1;
+  no warnings 'redefine';
+  local *Matchable::escape = sub { };
+  my $called;
+  $t2->match( sub { $called = 1 } );
+  eq_or_diff( $called, undef, 't2 should not match t1, trigger shouldnt callback' );
+};
+
 subtest 'matches _ if cond(0)' => sub {
   my $t1 = T1->new( val => 'foo' );
   local $_ = $t1;
