@@ -43,9 +43,10 @@ sub equiv_matchable {
 #  warn "_matchable_attrs(r): " . Dumper($r->_matchable_attrs);
   # Since right may be less specific, we can only compare those attributes
   my %new = map {
-    my @ret = equiv_attr($l,$r,$_,$p);
-#    warn 'ret: ' . Dumper \@ret;
-    return undef unless @ret;
+    my @ret = equiv_attr( $l, $r, $_, $p );
+
+    #    warn 'ret: ' . Dumper \@ret;
+    return undef unless defined $ret[0];
     @ret
   } @{$r->_matchable_attrs};
   # But now we may be missing a few...
