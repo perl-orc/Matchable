@@ -1,11 +1,8 @@
 use Test::Most;
 
 use Matchable qw( ph isa_ph isa_ph_or );
-use Matchable::Placeholder;
-use Scalar::Util 'blessed';
 use lib 't/lib';
 use T1;
-use T2;
 
 my $t1 = T1->new(val=>'foo');
 
