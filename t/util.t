@@ -20,17 +20,6 @@ my $phbaz = ph('baz');
 my $ph    = {};
 my $ret;
 
-# equiv_arrayref
-# equiv_hashref
-# equiv_ref
-# equiv_a
-# equiv
-
-# equiv_hash
-eq_or_diff(equiv_hashref(+{qw(a b c d)},+{qw(a b c d)}),+{qw(a b c d)}, "equiv_hash: strings equate cleanly");
-$ret = equiv_hashref(+{a => $t1, b => $t1},+{a => $t1, b => $t1});
-eq_or_diff({a => $ret->{'a'}->val, b => $ret->{'b'}->val},{a => $t1->val, b => $t1->val}, "equiv_hash: mixed types inc t1 equate cleanly");
-
 eq_or_diff(equiv_a(2,2),2, "equiv_a: numbers equate cleanly");
 eq_or_diff(equiv_a("foo","foo"),"foo", "equiv_a: strings equate cleanly");
 $ret = equiv_a($t1,$t1);
