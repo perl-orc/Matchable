@@ -26,16 +26,6 @@ my $ret;
 # equiv_a
 # equiv
 
-eq_or_diff(equiv_arrayref([1,2,3],     [1,2,3]),     [1,2,3],     "equiv_arrayref: integers equate cleanly");
-eq_or_diff(equiv_arrayref([qw(a b c)], [qw(a b c)]), [qw(a b c)], "equiv_arrayref: strings equate cleanly");
-eq_or_diff(equiv_arrayref({},          []),          undef,       "equiv_arrayref: when one argument is a hashref, undef (left)");
-eq_or_diff(equiv_arrayref([],          {}),          undef,       "equiv_arrayref: when one argument is a hashref, undef (right)");
-eq_or_diff(equiv_arrayref([1..3],      [4..6]),      undef,       "equiv_arrayref: unequivalent ARRAYs are undef");
-$ret = equiv_arrayref([$t1,$t1],[$t1,$t1]);
-eq_or_diff($ret->[0]->val,'foo','equiv_arrayref: arrays equate cleanly 1');
-eq_or_diff($ret->[1]->val,'foo','equiv_arrayref: arrays equate cleanly 2');
-$ret->[0]->{'val'} = 'bar';
-eq_or_diff($t1->val, 'foo', "equiv_arrayref: t1s clone cleanly");
 # equiv_hash
 eq_or_diff(equiv_hashref(+{qw(a b c d)},+{qw(a b c d)}),+{qw(a b c d)}, "equiv_hash: strings equate cleanly");
 $ret = equiv_hashref(+{a => $t1, b => $t1},+{a => $t1, b => $t1});
